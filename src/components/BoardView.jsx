@@ -28,6 +28,16 @@ export default function BoardView() {
   if (!article) return <div className="boardView">로딩중...</div>;
   if (article === 'error') return <div className="boardView">error!</div>;
 
+  const onDelete = async () => {
+    try {
+      // id를 경로에 달아서 파라미터로 보내기
+      await axios.get(`/del/${id}`);
+      window.location.href = '/';
+    } catch(err) {
+      alert('오류가 발생했습니다. 콘솔을 확인해주세요.');
+    }
+  };
+
   return <div className="boardView board">
     <h2>Board View page</h2>
     <Card style={{ width: '800px', margin: '30px auto' }}>
@@ -55,7 +65,7 @@ export default function BoardView() {
             marginRight: "10px"
           }}>수정</Button>
         </Link>
-        <Button variant="danger">삭제</Button>
+        <Button variant="danger" onClick={onDelete}>삭제</Button>
       </Card.Body>
     </Card>
     <Link to="/"><Button variant="primary">목록</Button></Link>

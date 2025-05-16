@@ -8,10 +8,15 @@ import axios from 'axios';
 export default function BoardList() {
   // 비동기로 board 테이블에 있는 전체 값을 가져오기
   const [boardList, setBoardList] = useState(null);
+  let error = null;
 
   const getBoardData = async () => {
-    const response = await axios.get('/list'); // server.js res.send()를 받아옴
-    setBoardList(response.data);
+    try {
+      const response = await axios.get('/list'); // server.js res.send()를 받아옴
+      setBoardList(response.data);
+    } catch (err) {
+      error = err;
+    }
   };
 
   // useEffect : 마운트될 때와 업데이트될 때 호출(실행)
@@ -24,7 +29,8 @@ export default function BoardList() {
     getBoardData();
   }, []);
 
-  if (!boardList) return <div className="boardList">데이터가 없습니다.</div>
+  if (!boardList) return <div className="boardList">데이터가 없습니다.</div>;
+  if (error) return <div className="boardList">에러가 발생했습니다.</div>;
 
   return (
     <div className="boardList">

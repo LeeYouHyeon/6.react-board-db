@@ -71,7 +71,6 @@ export default function BoardModify() {
       window.location.href = `/view/${id}`;
     } catch (e) {
       alert("오류가 발생했습니다.");
-      console.log(e);
     }
   }
 
